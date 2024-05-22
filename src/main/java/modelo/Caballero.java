@@ -7,8 +7,8 @@ public class Caballero {
 	private int fuerza;
 	private int experiencia;
 	private String foto;
-	private int arma_id;
-	private int escudo_id;
+	private Arma arma;
+	private Escudo escudo;
 	
 	public int getId() {
 		return id;
@@ -40,22 +40,22 @@ public class Caballero {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-	public int getArma_id() {
-		return arma_id;
+	public Arma getArma() {
+		return arma;
 	}
-	public void setArma_id(int arma_id) {
-		this.arma_id = arma_id;
+	public void setArma(Arma arma) {
+		this.arma = arma;
 	}
-	public int getEscudo_id() {
-		return escudo_id;
+	public Escudo getEscudo() {
+		return escudo;
 	}
-	public void setEscudo_id(int escudo_id) {
-		this.escudo_id = escudo_id;
+	public void setEscudo(Escudo escudo) {
+		this.escudo = escudo;
 	}
 	
 	@Override
 	public String toString() {
 		return "Caballero [id=" + id + ", nombre=" + nombre + ", fuerza=" + fuerza + ", experiencia=" + experiencia
-				+ ", foto=" + foto + ", arma_id=" + arma_id + ", escudo_id=" + escudo_id +"]";
+				+ ", foto=" + foto + ", arma=" + arma + ", escudo=" + escudo +"]";
 	}
 }

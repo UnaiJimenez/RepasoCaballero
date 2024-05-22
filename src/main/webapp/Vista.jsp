@@ -14,6 +14,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<a href="InsertarCaballero">Insertar CABALLEROS</a>
 	<table class="table table-responsive table-striped">
 					<thead>
 						<tr>
@@ -34,8 +35,8 @@
 								<td>${caballero.fuerza}</td>
 								<td>${caballero.experiencia}</td>
 								<td>${caballero.foto}</td>
-								<td>${caballero.arma_id}</td>
-								<td>${caballero.escudo_id}</td>
+								<td>${caballero.arma.id}</td>
+								<td>${caballero.escudo.id}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
