@@ -18,6 +18,7 @@ import modelo.Escudo;
 import modelo.ModeloArma;
 import modelo.ModeloCaballero;
 import modelo.ModeloEscudo;
+import modelo.Validaciones;
 
 /**
  * Servlet implementation class InsertarCaballero
@@ -57,12 +58,40 @@ public class InsertarCaballero extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		boolean insertarOk = false;
+		boolean nombreNoOk = false;
+		boolean nombreRepetido = false;
+		boolean armaEscudoNull = false;
+		int fuerza , experiencia, arma_id = 0, escudo_id = 0;
+		
 		String nombre = request.getParameter("nombre");
-		int fuerza = Integer.parseInt(request.getParameter("fuerza"));
-		int experiencia = Integer.parseInt(request.getParameter("experiencia"));
-		String foto = request.getParameter("email");
-		int arma_id = Integer.parseInt(request.getParameter("arma_id"));
-		int escudo_id = Integer.parseInt(request.getParameter("escudo_id"));
+		
+		if (request.getParameter("fuerza").equals("")) {
+			fuerza = 0;
+		} else {
+			fuerza = Integer.parseInt(request.getParameter("fuerza"));
+		}
+		
+		if(request.getParameter("experiencia").equals("")) {
+			experiencia = 0;
+		} else {
+			experiencia = Integer.parseInt(request.getParameter("experiencia"));
+		}
+		
+		String foto = request.getParameter("foto");
+		
+		if(request.getParameter("arma_id").equals("")) {
+			armaEscudoNull = true;
+		} else {
+			arma_id = Integer.parseInt(request.getParameter("arma_id"));
+		}
+		
+		if(request.getParameter("escudo_id").equals("")) {
+			armaEscudoNull = true;
+		} else {
+			escudo_id = Integer.parseInt(request.getParameter("escudo_id"));
+		}
+		
 		
 		ModeloCaballero mc = new ModeloCaballero();
 		
@@ -80,16 +109,41 @@ public class InsertarCaballero extends HttpServlet {
 			escudo.setId(escudo_id);
 			caballero.setEscudo(escudo);
 
-			try {
-				mc.insertar(caballero);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(request.getParameter("arma_id").equals("") || request.getParameter("escudo_id").equals("")) {
+				armaEscudoNull = true;
+			} else {
+				if(Validaciones.nombreRellenado(caballero) == true) {
+					try {
+						if(ModeloCaballero.nombreRepetido(caballero) == false) {
+							try {
+								mc.insertar(caballero);
+								insertarOk = true;
+							} catch (ClassNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						} else {
+							nombreRepetido = true;
+						}
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					nombreNoOk = true;
+				}
 			}
+			
+			request.setAttribute("insertarOk", insertarOk);
+			request.setAttribute("nombreNoOk", nombreNoOk);
+			request.setAttribute("nombreRepetido", nombreRepetido);
+			request.setAttribute("armaEscudoNull", armaEscudoNull);
 			request.getRequestDispatcher("CaballerosVerTodos").forward(request, response);
 	}
 }
-

@@ -89,10 +89,25 @@ public class ModeloCaballero {
 		pst.setString(1, caballero.getNombre());
 		pst.setInt(2, caballero.getFuerza());
 		pst.setInt(3, caballero.getExperiencia());
-		pst.setString(4, caballero.getNombre());
+		pst.setString(4, caballero.getFoto());
 		pst.setInt(5, caballero.getArma().getId());
 		pst.setInt(6, caballero.getEscudo().getId());
 		
 		pst.execute();	
+	}
+	
+	public static boolean nombreRepetido(Caballero caballero) throws ClassNotFoundException, SQLException {
+		
+		Connection con = Conector.getConnection();
+		
+		PreparedStatement pst = con.prepareStatement("SELECT nombre FROM caballeros WHERE nombre = ?");
+		pst.setString(1, caballero.getNombre());
+		
+		ResultSet rs = pst.executeQuery();
+		if(rs.next()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

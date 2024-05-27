@@ -14,7 +14,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="InsertarCaballero">Insertar CABALLEROS</a>
+	<c:if test="${nombreNoOk == true}">
+		<div class="alert alert-danger">
+			<p>No se ha insertado (rellena el nombre)</p>
+		</div>
+	</c:if>
+	<c:if test="${nombreRepetido == true}">
+		<div class="alert alert-danger">
+			<p>No se ha insertado (nombre repetido)</p>
+		</div>
+	</c:if>
+	<c:if test="${armaEscudoNull == true}">
+		<div class="alert alert-danger">
+			<p>No se ha insertado (arma y escudo no pueden estar vacios)</p>
+		</div>
+	</c:if>
+	<c:if test="${insertarOk == true}">
+		<div class="alert alert-success">
+			<p>Se ha insertado correctamente</p>
+		</div>
+	</c:if>
+	<a href="InsertarCaballero" style="background-color: lightgrey; text-decoration: none; color: green; margin-left: 10px">INSERTAR CABALLEROS</a>
 	<table class="table table-responsive table-striped">
 					<thead>
 						<tr>
